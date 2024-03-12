@@ -17,7 +17,7 @@ y_err = np.random.normal(loc=np.mean(y), scale=0.1, size=len(y))
 
 # Zaznaczamy x, y oraz obszar szumu wokół funkcji
 ax[0].plot(x, y, label="exp(-x^2)", marker=".", markersize=12)
-ax[0].fill_between(x, y - y_err, y + y_err, alpha=0.2, label="+/- szum")
+ax[0].fill_between(x, y - y_err, y + y_err, alpha=0.2, label= "+/- szum")
 
 # Dodajemy oznaczenia osi i legendę na górze po lewej stronie
 ax[0].set_xlabel("x")
