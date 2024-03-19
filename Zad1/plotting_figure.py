@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # Chcemy zapisać dwa wykresy ułożone w jednym wierszu i dwóh kolumnach
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(12, 6))
 
