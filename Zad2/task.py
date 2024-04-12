@@ -13,7 +13,12 @@ def is_matrix_square(mat: List[List[int]]) -> bool:
 
     :return: true if matrix is square one, otherwise false
     """
-    ...
+
+    for row in mat:
+        if len(mat) != len(row):
+            return False
+
+    return True
 
 
 def get_minor_matrix(mat: List[List[int]], i: int, j: int) -> List[List[int]]:
@@ -27,7 +32,21 @@ def get_minor_matrix(mat: List[List[int]], i: int, j: int) -> List[List[int]]:
 
     :return: minor matrix
     """
-    ...
+
+    M = []
+
+    if i >= len(mat) or j >= len(mat[0]):
+        return []
+    else:
+        for ri in range(len(mat)):
+            if ri != i:
+                M.append([])
+                for ci in range(len(mat[i])):
+                    if ci != j:
+                        M[-1].append(mat[ri][ci])
+
+        print(M)
+        return M
 
 
 def matrix_determinant(mat: List[List[int]]) -> int:
@@ -38,7 +57,21 @@ def matrix_determinant(mat: List[List[int]]) -> int:
 
     :return: determinant
     """
-    ...
+
+    if is_matrix_square(mat):
+        if len(mat) == 1:
+            return mat[0][0]
+        elif len(mat) == 2:
+            return mat[0][0] * mat[1][1] - (mat[1][0] * mat[0][1])
+        else:
+            sum = 0
+            mult = 1
+            for ci in range(len(mat)):
+                sum += matrix_determinant(get_minor_matrix(mat, 0, ci)) * mult * mat[0][ci]
+                mult *= -1
+            return sum
+    else:
+        raise ValueError("Matrix is not square!")
 
 
 @pytest.mark.parametrize(
@@ -59,16 +92,16 @@ def test_is_matrix_square(input_matrix, expected_result):
         ([[3, 0, -1], [-1, -1, 0], [1, -1, 2]], 0, 0, [[-1, 0], [-1, 2]]),
         ([[3, 0, -1], [-1, -1, 0], [1, -1, 2]], 1, 1, [[3, -1], [1, 2]]),
         (
-            [
-                [2, 5, 3, 6, 3],
-                [17, 5, 7, 4, 2],
-                [7, 8, 5, 3, 2],
-                [9, 4, -6, 8, 3],
-                [2, -5, 7, 4, 2],
-            ],
-            2,
-            3,
-            [[2, 5, 3, 3], [17, 5, 7, 2], [9, 4, -6, 3], [2, -5, 7, 2]],
+                [
+                    [2, 5, 3, 6, 3],
+                    [17, 5, 7, 4, 2],
+                    [7, 8, 5, 3, 2],
+                    [9, 4, -6, 8, 3],
+                    [2, -5, 7, 4, 2],
+                ],
+                2,
+                3,
+                [[2, 5, 3, 3], [17, 5, 7, 2], [9, 4, -6, 3], [2, -5, 7, 2]],
         ),
     ],
 )
@@ -86,46 +119,46 @@ def test_get_minor_matrix(input_matrix, row, col, expected_result):
         ([[2, 4, -3], [1, 8, 7], [2, 3, 5]], 113),
         ([[1, 2, 3, 4], [5, 0, 2, 8], [3, 5, 6, 7], [2, 5, 3, 1]], 24),
         (
-            [
-                [2, 5, 3, 6, 3],
-                [17, 5, 7, 4, 2],
-                [7, 8, 5, 3, 2],
-                [9, 4, -6, 8, 3],
-                [2, -5, 7, 4, 2],
-            ],
-            2060,
+                [
+                    [2, 5, 3, 6, 3],
+                    [17, 5, 7, 4, 2],
+                    [7, 8, 5, 3, 2],
+                    [9, 4, -6, 8, 3],
+                    [2, -5, 7, 4, 2],
+                ],
+                2060,
         ),
         (
-            [
-                [1, 2, 4, 0, 9],
-                [2, 3, 4, 1, 1],
-                [6, 7, 3, 9, 3],
-                [2, 0, 3, 0, 2],
-                [4, 5, 2, 3, 1],
-            ],
-            1328,
+                [
+                    [1, 2, 4, 0, 9],
+                    [2, 3, 4, 1, 1],
+                    [6, 7, 3, 9, 3],
+                    [2, 0, 3, 0, 2],
+                    [4, 5, 2, 3, 1],
+                ],
+                1328,
         ),
         (
-            [
-                [2, 4, 5, 3, 1, 2],
-                [2, 4, 7, 5, 3, 2],
-                [1, 1, 0, 2, 3, 1],
-                [1, 3, 9, 0, 3, 2],
-                [1, 1, 2, 2, 4, 1],
-                [0, 0, 4, 1, 2, 3],
-            ],
-            88,
+                [
+                    [2, 4, 5, 3, 1, 2],
+                    [2, 4, 7, 5, 3, 2],
+                    [1, 1, 0, 2, 3, 1],
+                    [1, 3, 9, 0, 3, 2],
+                    [1, 1, 2, 2, 4, 1],
+                    [0, 0, 4, 1, 2, 3],
+                ],
+                88,
         ),
         (
-            [
-                [3, 2, 1, 4, 0, 1],
-                [1, 2, 3, 1, 9, 1],
-                [0, 2, 1, 1, 9, 0],
-                [8, 2, 1, 0, 2, 3],
-                [2, 3, 4, 0, 1, 2],
-                [2, 1, 0, 0, 1, 1],
-            ],
-            -536,
+                [
+                    [3, 2, 1, 4, 0, 1],
+                    [1, 2, 3, 1, 9, 1],
+                    [0, 2, 1, 1, 9, 0],
+                    [8, 2, 1, 0, 2, 3],
+                    [2, 3, 4, 0, 1, 2],
+                    [2, 1, 0, 0, 1, 1],
+                ],
+                -536,
         ),
     ],
 )
@@ -141,14 +174,14 @@ def test_matrix_determinant_correct(matrix, expected_determinant):
         ([[2, 4, -3], [1, 8, 7], [2, 5]]),
         ([[1, 2, 3, 4], [0, 2, 8], [3, 5, 6, 7], [2, 3, 1]]),
         (
-            [
-                [2, 5, 3, 6, 3],
-                [17, 5, 7, 4, 2],
-                [7, 8, 5, 3, 2],
-                [9, 4, -6, 8, 3],
-                [2, -5, 7, 4, 2],
-                [2, -5, 7, 4, 2],
-            ]
+                [
+                    [2, 5, 3, 6, 3],
+                    [17, 5, 7, 4, 2],
+                    [7, 8, 5, 3, 2],
+                    [9, 4, -6, 8, 3],
+                    [2, -5, 7, 4, 2],
+                    [2, -5, 7, 4, 2],
+                ]
         ),
         ([[1, 2, 4, 0, 9], [2, 3, 4, 1], [6, 7, 3], [2, 0], [4]]),
     ],
