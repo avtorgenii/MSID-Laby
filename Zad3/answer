@@ -1,1 +1,4 @@
-Nie,
+Nie zawsze, ponieważ np. jeśli weźmiemy polynomial_degree = 1, dla wybranego zadania, to widać że błąd jest 0.36,
+gdy na wykresie widać że linia trendu nie za bardzo odpowiada rzeczywistości,
+ale biorąc polynomial_degree = 2, błąd się zwiększa do 0.39, ale kształt linii trendu teraz bardziej odpowiada naszym danym,
+dlatego błąd nie może zawsze świadczyć o lepszym dopasowniu linii trendu
