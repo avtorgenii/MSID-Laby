@@ -12,7 +12,6 @@ from typing import Tuple
 
 import matplotlib.pyplot as plt
 import numpy as np
-import numpy.linalg.linalg
 import pandas as pd
 
 
@@ -79,24 +78,8 @@ def least_squares_solution(
     :return: theta matrix of polynomial, shape = (1, polynomial_degree + 1)
     """
 
-    """
-    x_resh = X.reshape(1, -1).copy()
-
-    x_stack = x_resh.copy()
-    for i in range(polynomial_degree):
-        x_stack = np.vstack([x_stack, np.ones_like(x_resh) * (i+1)])
-        print(x_stack, end='\n\n\n\n\n')
-
-    print(np.linalg.det(x_stack @ x_stack.T))
-    print(x_stack @ x_stack.T)
-
-    out = np.linalg.inv(x_stack @ x_stack.T) @ x_stack @ Y.T
-    print(out)
-    """
-
     x_stack = np.column_stack([X ** i for i in range(polynomial_degree + 1)])
 
-    # Compute the least squares solution
     out = np.linalg.inv(x_stack.T @ x_stack) @ x_stack.T @ Y
 
     print(out)
