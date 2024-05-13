@@ -30,7 +30,7 @@ print("Wartość x:", solution.x)
 # Variables definition
 i = 1
 c1 = 0.5
-x0 = 0.75  # Starting point
+x0 = 10  # Starting point
 e = 0.01  # Epsilon
 h = 0.03  # Step
 
@@ -53,6 +53,7 @@ def gradient_of_kara_function(x, iteration):
 
 
 def spadek(x_start, kara_iteration):
+    limit = 100
     print(f"    Iteration 0 of spadek x = {x_start}, y = {objective(x_start)}")
     iteration = 1
     x_next = x_start - h * gradient_of_kara_function(x_start, kara_iteration)
@@ -62,7 +63,7 @@ def spadek(x_start, kara_iteration):
 
     x_curr = x_start
 
-    while abs(x_next - x_curr) >= e:
+    while abs(x_next - x_curr) >= e and limit >= iteration:
         x_curr = x_next
         x_next = x_next - h * gradient_of_kara_function(x_curr, kara_iteration)
         print(f"    Iteration {iteration} of spadek x = {x_next}, y = {objective(x_next)}")
