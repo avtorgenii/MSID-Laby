@@ -16,9 +16,6 @@ def get_confusion_matrix(
     if len(y_true) != len(y_pred):
         raise ValueError("Invalid input shapes!")
 
-    if len(y_true) != num_classes:
-        raise ValueError("Invalid prediction classes!")
-
     cm = [[0] * num_classes for _ in range(num_classes)]
 
     for true, pred in zip(y_true, y_pred):
